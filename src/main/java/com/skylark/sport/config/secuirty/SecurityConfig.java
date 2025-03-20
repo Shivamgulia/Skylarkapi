@@ -25,7 +25,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()  // Disable CSRF protection
                 .authorizeRequests()
-                .requestMatchers("/api/v1/**").fullyAuthenticated()
+//                .requestMatchers("/api/v1/**").fullyAuthenticated()
 //                .requestMatchers("/ws/**").fullyAuthenticated()
                 .anyRequest().permitAll() // Permit all requests to all paths
                 .and().

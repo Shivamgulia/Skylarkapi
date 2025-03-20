@@ -1,9 +1,7 @@
 package com.skylark.sport.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,4 +12,6 @@ public class SignupDTO {
     private String name;
 
     private String phoneNumber;
+
+
 }
