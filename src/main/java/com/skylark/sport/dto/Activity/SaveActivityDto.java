@@ -1,9 +1,12 @@
 package com.skylark.sport.dto.Activity;
 
 
+import com.skylark.sport.entity.ActivityMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +23,8 @@ public class SaveActivityDto {
     private int amount;
 
     private String unit;
+
+    private List<ActivityMapper> measures;
 
 
 }

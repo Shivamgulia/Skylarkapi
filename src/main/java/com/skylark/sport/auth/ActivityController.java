@@ -3,10 +3,8 @@ package com.skylark.sport.auth;
 
 import com.skylark.sport.dto.Activity.SaveActivityDto;
 import com.skylark.sport.entity.Activity;
-import com.skylark.sport.entity.Goals;
 import com.skylark.sport.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +28,7 @@ public class ActivityController {
         newActivity.setMonth(activity.getMonth());
         newActivity.setYear(activity.getYear());
         newActivity.setAmount(activity.getAmount());
+        newActivity.setMeasures(activity.getMeasures());
 
         Activity saveActivity = activityService.saveActivity(newActivity);
 
