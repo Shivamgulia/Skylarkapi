@@ -33,4 +33,4 @@ build/
 .vscode/
 
 # env vars
-application-dev.properties
+**/application-dev.properties
