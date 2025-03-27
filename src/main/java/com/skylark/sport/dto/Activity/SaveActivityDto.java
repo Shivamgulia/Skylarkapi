@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 public class SaveActivityDto {
     private String activityName;
 
-    private String month;
+    private int month;
 
     private int date;
 
-    private int year;
+    private String year;
 
     private int amount;
 

@@ -15,5 +15,7 @@ public interface GoalService {
 
     void deleteById(Long id);
 
+    List<Goals> findByCoach(Long coachId);
+
 
 }

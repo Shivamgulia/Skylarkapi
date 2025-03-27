@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 public class GoalServiceImpl implements GoalService {
 
+
     @Autowired
     public GoalRepository goalRepository;
 
@@ -31,10 +32,9 @@ public class GoalServiceImpl implements GoalService {
     public Goals findById(Long id) {
         Optional<Goals> goals = goalRepository.findById(id);
 
-        if(goals.isPresent()){
+        if (goals.isPresent()) {
             return goals.get();
-        }
-        else {
+        } else {
 
 
             return null;
@@ -47,5 +47,10 @@ public class GoalServiceImpl implements GoalService {
         goalRepository.deleteById(id);
 
 
+    }
+
+    @Override
+    public List<Goals> findByCoach(Long coachId) {
+        return goalRepository.findByCoach_Id(coachId);
     }
 }

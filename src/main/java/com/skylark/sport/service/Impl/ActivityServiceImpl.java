@@ -46,4 +46,30 @@ public class ActivityServiceImpl implements ActivityService {
         List<Activity> activityList = activityRepository.findAll();
         return activityList;
     }
+
+    @Override
+    public List<Activity> getActivityByStudent(Long studentId) {
+
+        return activityRepository.findByStudent_Id(studentId);
+    }
+
+    @Override
+    public List<Activity> getActivityByCoach(Long coachId) {
+        return activityRepository.findByCoach_Id(coachId);
+    }
+
+    @Override
+    public List<Activity> getActivityByCoachAndMonth(Long coachId, int month) {
+        return activityRepository.findByCoach_IdAndMonth(coachId, month);
+    }
+
+    @Override
+    public List<Activity> getActivityByStudentAndMonth(Long coachId, int month) {
+        return activityRepository.findByStudent_IdAndMonth(coachId, month);
+    }
+
+    @Override
+    public void markActivityApproved(Long activityId) {
+        activityRepository.markActivityAsApproved(activityId);
+    }
 }

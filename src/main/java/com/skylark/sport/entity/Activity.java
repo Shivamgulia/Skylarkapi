@@ -18,16 +18,36 @@ public class Activity {
 
     private String type;
 
-    private String month;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    private Student student;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "coach_id", referencedColumnName = "id")
+    private Coach coach;
+
+    private int month;
 
     private int date;
 
-    private int year;
+    private String year;
 
     private int amount;
 
     private String unit;
 
+    private boolean approved;
+
+    private Category category;
+
+//TODO Add category also
+
 
 }
 
+
+
+enum Category {
+    GYM,
+    SPORT
+}

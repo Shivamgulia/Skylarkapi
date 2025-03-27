@@ -24,6 +24,7 @@ public class GoalController {
         goal.setType(goals.getGoalName());
         goal.setMonth(goals.getMonth());
         goal.setAmount(goals.getAmount());
+        goal.setCoach(goals.getCoach());
 
         Goals savedGoal = goalService.save(goal);
 
@@ -33,6 +34,14 @@ public class GoalController {
     @GetMapping("/goals/{goalid}")
     public Goals getGoalById(@PathVariable("goalid") Long id) {
         return goalService.findById(id);
+    }
+
+
+    @GetMapping("/coachgoals/{coachid}")
+    public List<Goals> getGoals(@PathVariable("coachid") Long coachid) {
+
+        return goalService.findByCoach(coachid);
+
     }
 
     @GetMapping("/goals")

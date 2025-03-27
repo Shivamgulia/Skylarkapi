@@ -6,9 +6,11 @@ import com.skylark.sport.entity.Activity;
 import com.skylark.sport.entity.Goals;
 import com.skylark.sport.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -42,9 +44,38 @@ public class ActivityController {
 
     }
 
+    @GetMapping("/studentactivitys/{studentid}")
+    public List<Activity> getStudentActivities(@PathVariable("studentid") Long studentid,  @RequestParam(name = "month", required = false) Optional<Integer> month) {
+        if(month.isPresent()) {
+            return activityService.getActivityByStudentAndMonth(studentid, month.get());
+        }
+        return activityService.getActivityByStudent(studentid);
+    }
+
+    @GetMapping("/coachactivitys/{coachid}")
+    public List<Activity> getCoachActivities(@PathVariable("coachid") Long coachId, @RequestParam(name = "month", required = false) Optional<Integer> month) {
+        if(month.isPresent()) {
+            return activityService.getActivityByCoachAndMonth(coachId, month.get());
+        }
+        return activityService.getActivityByCoach(coachId);
+    }
+
     @GetMapping("/activitys")
     public List<Activity> getAllActivities() {
         return activityService.getAllActivity();
+    }
+
+    @PutMapping("/verfiyactivity")
+    public String updateActivity(@RequestBody List<Long> activityIds) {
+        try {
+            for (Long activityId : activityIds) {
+                activityService.markActivityApproved(activityId);
+            }
+            return "success";
+        }
+        catch (Exception e) {
+            return "failed";
+        }
     }
 
 }
