@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String name) {
+    public User findByUsername(String email) {
 
-        Optional<User> user = userRepository.findByNumber(name);
+        Optional<User> user = userRepository.findByEmail(email);
 
 
 
@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByNumber(String number) {
-        return userRepository.findByNumber(number);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 

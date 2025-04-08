@@ -19,7 +19,7 @@ public class SaveGoalDto {
 
     private String unit;
 
-    private Coach coach;
+    private Long coach;
 
 
 }

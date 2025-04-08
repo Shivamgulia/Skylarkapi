@@ -1,7 +1,9 @@
 package com.skylark.sport.auth;
 
 import com.skylark.sport.dto.Goal.SaveGoalDto;
+import com.skylark.sport.entity.Coach;
 import com.skylark.sport.entity.Goals;
+import com.skylark.sport.service.CoachService;
 import com.skylark.sport.service.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +18,26 @@ public class GoalController {
     @Autowired
     private GoalService goalService;
 
+    @Autowired
+    private CoachService coachService;
+
     @PostMapping("/goals")
     public Long createGoal(@RequestBody SaveGoalDto goals) {
+
+        Coach coach = coachService.findCoachById(goals.getCoach());
+
+        if(coach == null) {
+            throw new RuntimeException("Coach not found");
+        }
+
+
         Goals goal = new Goals();
         goal.setYear(goals.getYear());
         goal.setUnit(goals.getUnit());
         goal.setType(goals.getGoalName());
         goal.setMonth(goals.getMonth());
         goal.setAmount(goals.getAmount());
-        goal.setCoach(goals.getCoach());
+        goal.setCoach(coach);
 
         Goals savedGoal = goalService.save(goal);
 

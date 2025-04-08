@@ -3,7 +3,11 @@ package com.skylark.sport.auth;
 
 import com.skylark.sport.dto.Activity.SaveActivityDto;
 import com.skylark.sport.entity.Activity;
+import com.skylark.sport.entity.Coach;
+import com.skylark.sport.entity.Student;
 import com.skylark.sport.service.ActivityService;
+import com.skylark.sport.service.CoachService;
+import com.skylark.sport.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +22,26 @@ public class ActivityController {
     @Autowired
     public ActivityService activityService;
 
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private CoachService coachService;
+
     @PostMapping("/activitys")
     public Long createActivity(@RequestBody SaveActivityDto activity) {
+
+
+        Student student = studentService.findStudentById(activity.getStudentId());
+        if (student == null) {
+            throw new RuntimeException("Student not found");
+        }
+
+        Coach coach = coachService.findCoachById(activity.getCoachId());
+
+        if (coach == null) {
+            throw new RuntimeException("Coach not found");
+        }
 
         Activity newActivity = new Activity();
         newActivity.setType(activity.getActivityName());
@@ -29,6 +51,8 @@ public class ActivityController {
         newActivity.setYear(activity.getYear());
         newActivity.setAmount(activity.getAmount());
         newActivity.setMeasures(activity.getMeasures());
+        newActivity.setStudent(student);
+        newActivity.setCoach(coach);
 
         Activity saveActivity = activityService.saveActivity(newActivity);
 

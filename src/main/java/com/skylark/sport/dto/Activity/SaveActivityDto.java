@@ -24,6 +24,10 @@ public class SaveActivityDto {
 
     private String unit;
 
+    private Long studentId;
+
+    private Long coachId;
+
     private List<ActivityMapper> measures;
 
 

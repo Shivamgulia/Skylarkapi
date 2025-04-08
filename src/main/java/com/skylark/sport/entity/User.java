@@ -24,13 +24,14 @@ public class User implements UserDetails {
     private int id;
 
 
-    @Column(name = "number")
-    private String number;
+    @Column(name = "email")
+    private String email;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "password")
+    private String password;
 
     private String role;
+    private String name;
 
 
 
@@ -39,21 +40,9 @@ public class User implements UserDetails {
         return List.of();
     }
 
-
-    //TODO figure out what to do with password
-    @Override
-    public String getPassword()   {
-        try {
-            throw new Exception("NO PASSWORD FIELD");
-        } catch
-            (Exception e) {
-        }
-        return "";
-    }
-
     @Override
     public String getUsername() {
-        return number;
+        return email;
     }
 
 

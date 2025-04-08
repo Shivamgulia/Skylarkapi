@@ -1,6 +1,7 @@
 package com.skylark.sport.auth;
 
 
+import com.skylark.sport.dto.LoginDTO;
 import com.skylark.sport.dto.SignupDTO;
 import com.skylark.sport.entity.User;
 import com.skylark.sport.service.UserService;
@@ -35,7 +36,7 @@ public class AuthController {
     @PostMapping("/signup")
     public String signup(@RequestBody SignupDTO user) {
 
-        Optional<User> foundUser = userService.findByNumber(user.getPhoneNumber());
+        Optional<User> foundUser = userService.findByEmail(user.getEmail());
 
         if (foundUser.isPresent()) {
             return null;
@@ -43,8 +44,10 @@ public class AuthController {
 
             User newUser = new User();
 
-            newUser.setNumber(user.getPhoneNumber());
+            newUser.setEmail(user.getEmail());
             newUser.setName(user.getName());
+            newUser.setPassword(user.getPassword());
+            newUser.setRole(user.getRole());
 
             userService.save(newUser);
 
@@ -57,6 +60,19 @@ public class AuthController {
 
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginRes> login(@RequestBody LoginDTO loginDTO) {
+
+        User user = userService.findByUsername(loginDTO.getEmail());
+
+        if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
+            String token = jwtUtil.generateToken(user.getEmail());
+            return ResponseEntity.ok(new LoginRes("Login in Success",token, user.getId(), user.getEmail()));
+        } else {
+            throw new RuntimeException("Invalid Credentials");
+        }
+    }
+
 }
 
 
@@ -66,4 +82,7 @@ public class AuthController {
 @Data
 class LoginRes {
     private String message;
+    private String token;
+    private Integer userId;
+    private String email;
 }

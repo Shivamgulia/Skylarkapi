@@ -11,7 +11,11 @@ public class SignupDTO {
 
     private String name;
 
-    private String phoneNumber;
+    private String email;
+
+    private String password;
+
+    private String role;
 
 
 }
