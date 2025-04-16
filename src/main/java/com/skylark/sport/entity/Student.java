@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @Table
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -22,7 +22,6 @@ public class Student {
     private Coach coach;
 
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_coach_id", referencedColumnName = "id")
-    private User profile;
+
+    private String email;
 }

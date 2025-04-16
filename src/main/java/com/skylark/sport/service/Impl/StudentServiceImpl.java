@@ -6,15 +6,14 @@ import com.skylark.sport.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private final StudentRepository studentRepository;
-
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    private StudentRepository studentRepository;
+
 
     @Override
     public Student findStudentById(Long id) {
@@ -38,5 +37,14 @@ public class StudentServiceImpl implements StudentService {
             return studentRepository.save(student);
         }
         return null;
+    }
+
+    @Override
+    public Student findByEmail(String email) {
+        List<Student> students = studentRepository.findByEmail(email);
+        if(students.size() < 1) {
+            return null;
+        }
+        return students.get(0);
     }
 }

@@ -44,15 +44,15 @@ public class ActivityController {
         }
 
         Activity newActivity = new Activity();
-        newActivity.setType(activity.getActivityName());
+        newActivity.setCategory(activity.getCategory());
         newActivity.setDate(activity.getDate());
-        newActivity.setUnit(activity.getUnit());
         newActivity.setMonth(activity.getMonth());
         newActivity.setYear(activity.getYear());
-        newActivity.setAmount(activity.getAmount());
+        newActivity.setName(activity.getActivityName());
         newActivity.setMeasures(activity.getMeasures());
         newActivity.setStudent(student);
         newActivity.setCoach(coach);
+        newActivity.setMeasures(activity.getMeasures());
 
         Activity saveActivity = activityService.saveActivity(newActivity);
 

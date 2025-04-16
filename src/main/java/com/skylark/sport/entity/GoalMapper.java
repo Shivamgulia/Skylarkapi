@@ -1,22 +1,25 @@
 package com.skylark.sport.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table
-public class Coach {
+public class GoalMapper {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    private String measure;
 
-    private String email;
+    private String quantity;
+
+    private String unit;
 }

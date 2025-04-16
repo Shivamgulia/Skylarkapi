@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @NoArgsConstructor
@@ -17,17 +19,18 @@ public class Goals {
     @Column(name = "id")
     private Long id;
 
-    private String type;
+    private String name;
 
     private int month;
 
     private String year;
 
-    private int amount;
-
-    private String unit;
-
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "coach_id", referencedColumnName = "id")
     private Coach coach;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<GoalMapper> measures;
+
+    private Category category;
 }

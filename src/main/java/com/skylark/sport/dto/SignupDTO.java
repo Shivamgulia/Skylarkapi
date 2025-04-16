@@ -17,5 +17,7 @@ public class SignupDTO {
 
     private String role;
 
+    private Long coachId;
+
 
 }

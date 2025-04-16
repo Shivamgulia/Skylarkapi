@@ -33,10 +33,10 @@ public class GoalController {
 
         Goals goal = new Goals();
         goal.setYear(goals.getYear());
-        goal.setUnit(goals.getUnit());
-        goal.setType(goals.getGoalName());
+        goal.setName(goals.getGoalName());
+        goal.setCategory(goals.getCategory());
         goal.setMonth(goals.getMonth());
-        goal.setAmount(goals.getAmount());
+        goal.setMeasures(goals.getMeasures());
         goal.setCoach(coach);
 
         Goals savedGoal = goalService.save(goal);
@@ -52,7 +52,6 @@ public class GoalController {
 
     @GetMapping("/coachgoals/{coachid}")
     public List<Goals> getGoals(@PathVariable("coachid") Long coachid) {
-
         return goalService.findByCoach(coachid);
 
     }

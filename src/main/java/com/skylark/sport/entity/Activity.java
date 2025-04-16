@@ -18,8 +18,6 @@ public class Activity {
     @Column(name = "id")
     private Long id;
 
-    private String type;
-
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;
@@ -28,15 +26,13 @@ public class Activity {
     @JoinColumn(name = "coach_id", referencedColumnName = "id")
     private Coach coach;
 
+    private String name;
+
     private int month;
 
     private int date;
 
     private String year;
-
-    private int amount;
-
-    private String unit;
 
     private boolean approved;
 
@@ -52,7 +48,3 @@ public class Activity {
 
 
 
-enum Category {
-    GYM,
-    SPORT
-}

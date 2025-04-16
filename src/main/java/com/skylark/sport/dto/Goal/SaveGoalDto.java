@@ -1,8 +1,13 @@
 package com.skylark.sport.dto.Goal;
 
 
+import com.skylark.sport.entity.ActivityMapper;
+import com.skylark.sport.entity.Category;
 import com.skylark.sport.entity.Coach;
+import com.skylark.sport.entity.GoalMapper;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,11 +20,12 @@ public class SaveGoalDto {
 
     private String year;
 
-    private int amount;
-
-    private String unit;
-
     private Long coach;
+
+    private List<GoalMapper> measures;
+
+    private Category category;
+
 
 
 }

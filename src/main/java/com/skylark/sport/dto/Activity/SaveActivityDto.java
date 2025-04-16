@@ -2,6 +2,7 @@ package com.skylark.sport.dto.Activity;
 
 
 import com.skylark.sport.entity.ActivityMapper;
+import com.skylark.sport.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,15 +21,12 @@ public class SaveActivityDto {
 
     private String year;
 
-    private int amount;
-
-    private String unit;
-
     private Long studentId;
 
     private Long coachId;
 
     private List<ActivityMapper> measures;
 
+    private Category category;
 
 }

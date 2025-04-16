@@ -35,4 +35,12 @@ public class CoachServiceImpl implements CoachService {
     public void deleteCoachById(Long id) {
         coachRepository.deleteById(id);
     }
+
+    @Override
+    public Coach findByEmail(String email) {
+        List<Coach> coaches =  coachRepository.findByEmail(email);
+        if(coaches.size() < 1) return null;
+
+        return coaches.get(0);
+    }
 }

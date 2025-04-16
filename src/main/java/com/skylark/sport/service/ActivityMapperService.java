@@ -1,6 +1,7 @@
 package com.skylark.sport.service;
 
 import com.skylark.sport.entity.Activity;
+import com.skylark.sport.entity.ActivityMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,9 +9,9 @@ import java.util.List;
 @Service
 public interface ActivityMapperService {
 
-    Activity getActivityById(int activityId);
+    ActivityMapper getActivityById(Long activityId);
 
-    List<Activity> getAllActivity();
+    List<ActivityMapper> getAllActivity();
 
-    void insertActivity(Activity activity);
+    void insertActivity(ActivityMapper activity);
 }

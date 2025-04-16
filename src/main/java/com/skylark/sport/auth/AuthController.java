@@ -3,7 +3,11 @@ package com.skylark.sport.auth;
 
 import com.skylark.sport.dto.LoginDTO;
 import com.skylark.sport.dto.SignupDTO;
+import com.skylark.sport.entity.Coach;
+import com.skylark.sport.entity.Student;
 import com.skylark.sport.entity.User;
+import com.skylark.sport.service.CoachService;
+import com.skylark.sport.service.StudentService;
 import com.skylark.sport.service.UserService;
 import com.skylark.sport.util.JWTUtil;
 import lombok.AllArgsConstructor;
@@ -33,8 +37,15 @@ public class AuthController {
     public UserService userService;
 
 
-    @PostMapping("/signup")
-    public String signup(@RequestBody SignupDTO user) {
+    @Autowired
+    private CoachService coachService;
+
+    @Autowired
+    private StudentService studentService;
+
+
+    @PostMapping("/signup/coach")
+    public String signupCoach(@RequestBody SignupDTO user) {
 
         Optional<User> foundUser = userService.findByEmail(user.getEmail());
 
@@ -47,9 +58,14 @@ public class AuthController {
             newUser.setEmail(user.getEmail());
             newUser.setName(user.getName());
             newUser.setPassword(user.getPassword());
-            newUser.setRole(user.getRole());
-
+            newUser.setRole("COACH");
             userService.save(newUser);
+
+            Coach newCoach = new Coach();
+
+            newCoach.setEmail(user.getEmail());
+
+            coachService.saveCoach(newCoach);
 
             System.out.println("New User Created \n" + newUser);
 
@@ -59,15 +75,71 @@ public class AuthController {
 
 
     }
+    @PostMapping("/signup/student")
+    public String signupStudent(@RequestBody SignupDTO user) {
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginRes> login(@RequestBody LoginDTO loginDTO) {
+        Optional<User> foundUser = userService.findByEmail(user.getEmail());
+
+        if (foundUser.isPresent()) {
+            return "User Already Present";
+        } else {
+
+            User newUser = new User();
+
+            Coach tempCoach  = coachService.findCoachById(user.getCoachId());
+
+            if(tempCoach == null) return "Coach Not Found";
+
+            newUser.setEmail(user.getEmail());
+            newUser.setName(user.getName());
+            newUser.setPassword(user.getPassword());
+            newUser.setRole("STUDENT");
+            userService.save(newUser);
+
+            Student newStudent = new Student();
+
+            newStudent.setEmail(user.getEmail());
+            newStudent.setCoach(tempCoach);
+
+            studentService.saveStudent(newStudent);
+
+            System.out.println("New User Created \n" + newUser);
+
+            return "Student Created";
+
+        }
+
+
+    }
+
+    @PostMapping("/login/coach")
+    public ResponseEntity<LoginRes> loginCoach(@RequestBody LoginDTO loginDTO) {
 
         User user = userService.findByUsername(loginDTO.getEmail());
 
         if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
+
+            Coach coach = coachService.findByEmail(user.getEmail());
+            if(coach == null) return (ResponseEntity<LoginRes>) ResponseEntity.notFound();
+
             String token = jwtUtil.generateToken(user.getEmail());
-            return ResponseEntity.ok(new LoginRes("Login in Success",token, user.getId(), user.getEmail()));
+            return ResponseEntity.ok(new LoginRes("Login in Success",token, user.getId(), user.getEmail(), coach, null));
+        } else {
+            throw new RuntimeException("Invalid Credentials");
+        }
+    }
+    @PostMapping("/login/student")
+    public ResponseEntity<LoginRes> loginStudent(@RequestBody LoginDTO loginDTO) {
+
+        User user = userService.findByUsername(loginDTO.getEmail());
+
+        if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
+
+            Student student = studentService.findByEmail(user.getEmail());
+            if(student == null) return (ResponseEntity<LoginRes>) ResponseEntity.notFound();
+
+            String token = jwtUtil.generateToken(user.getEmail());
+            return ResponseEntity.ok(new LoginRes("Login in Success",token, user.getId(), user.getEmail(), null, student));
         } else {
             throw new RuntimeException("Invalid Credentials");
         }
@@ -85,4 +157,6 @@ class LoginRes {
     private String token;
     private Integer userId;
     private String email;
+    private Coach coach;
+    private Student student;
 }

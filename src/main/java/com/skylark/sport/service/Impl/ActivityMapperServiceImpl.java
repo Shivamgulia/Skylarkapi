@@ -18,19 +18,19 @@ public class ActivityMapperServiceImpl implements ActivityMapperService {
 
 
     @Override
-    public Activity getActivityById(int activityId) {
+    public ActivityMapper getActivityById(Long activityMapperId) {
 
-        Optional<Activity> activity = activityMapperRespository.findById(activityId);
+        Optional<ActivityMapper> activity = activityMapperRespository.findById(activityMapperId);
         return activity.orElse(null);
     }
 
     @Override
-    public List<Activity> getAllActivity() {
+    public List<ActivityMapper> getAllActivity() {
         return activityMapperRespository.findAll();
     }
 
     @Override
-    public void insertActivity(Activity activity) {
+    public void insertActivity(ActivityMapper activity) {
         activityMapperRespository.save(activity);
 
     }

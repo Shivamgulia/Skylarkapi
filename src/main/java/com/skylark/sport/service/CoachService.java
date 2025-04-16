@@ -13,4 +13,6 @@ public interface CoachService {
     List<Coach> findAllCoaches();
 
     void deleteCoachById(Long id);
+
+    Coach findByEmail(String email);
 }
