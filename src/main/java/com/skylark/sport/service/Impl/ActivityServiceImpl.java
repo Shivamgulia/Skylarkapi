@@ -21,10 +21,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         Optional<Activity> activity = activityRepository.findById(activityId);
 
-        if(activity.isPresent()) {
-            return activity.get();
-        }
-        return null;
+        return activity.orElse(null);
     }
 
     @Override

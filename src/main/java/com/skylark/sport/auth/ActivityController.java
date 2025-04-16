@@ -4,9 +4,11 @@ package com.skylark.sport.auth;
 import com.skylark.sport.dto.Activity.SaveActivityDto;
 import com.skylark.sport.entity.Activity;
 import com.skylark.sport.entity.Coach;
+import com.skylark.sport.entity.Goals;
 import com.skylark.sport.entity.Student;
 import com.skylark.sport.service.ActivityService;
 import com.skylark.sport.service.CoachService;
+import com.skylark.sport.service.GoalService;
 import com.skylark.sport.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,9 @@ public class ActivityController {
     @Autowired
     private CoachService coachService;
 
+    @Autowired
+    private GoalService goalService;
+
     @PostMapping("/activitys")
     public Long createActivity(@RequestBody SaveActivityDto activity) {
 
@@ -43,6 +48,12 @@ public class ActivityController {
             throw new RuntimeException("Coach not found");
         }
 
+        Goals goals = goalService.findById(activity.getGoalId());
+
+        if(goals == null) {
+            throw new RuntimeException("Goal not found");
+        }
+
         Activity newActivity = new Activity();
         newActivity.setCategory(activity.getCategory());
         newActivity.setDate(activity.getDate());
@@ -53,6 +64,7 @@ public class ActivityController {
         newActivity.setStudent(student);
         newActivity.setCoach(coach);
         newActivity.setMeasures(activity.getMeasures());
+        newActivity.setGoal(goals);
 
         Activity saveActivity = activityService.saveActivity(newActivity);
 
@@ -62,7 +74,6 @@ public class ActivityController {
 
     @GetMapping("/activitys/{activityId}")
     public Activity getActivityById(@PathVariable("activityId") Long id) {
-
         return activityService.getActivityById(id);
 
     }

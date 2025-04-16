@@ -113,33 +113,45 @@ public class AuthController {
     }
 
     @PostMapping("/login/coach")
-    public ResponseEntity<LoginRes> loginCoach(@RequestBody LoginDTO loginDTO) {
+    public LoginRes loginCoach(@RequestBody LoginDTO loginDTO) {
 
         User user = userService.findByUsername(loginDTO.getEmail());
 
         if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
 
             Coach coach = coachService.findByEmail(user.getEmail());
-            if(coach == null) return (ResponseEntity<LoginRes>) ResponseEntity.notFound();
+            if(coach == null)
+            {
+                LoginRes newLoginRes = new LoginRes();
+                newLoginRes.setMessage("Student Not Found");
+                return newLoginRes;
+            }
 
             String token = jwtUtil.generateToken(user.getEmail());
-            return ResponseEntity.ok(new LoginRes("Login in Success",token, user.getId(), user.getEmail(), coach, null));
+            return new LoginRes("Login in Success",token, user.getId(), user.getEmail(), coach, null);
         } else {
             throw new RuntimeException("Invalid Credentials");
         }
     }
+
     @PostMapping("/login/student")
-    public ResponseEntity<LoginRes> loginStudent(@RequestBody LoginDTO loginDTO) {
+    public LoginRes loginStudent(@RequestBody LoginDTO loginDTO) {
 
         User user = userService.findByUsername(loginDTO.getEmail());
-
+        System.out.println(user);
         if (user != null && user.getPassword().equals(loginDTO.getPassword())) {
 
             Student student = studentService.findByEmail(user.getEmail());
-            if(student == null) return (ResponseEntity<LoginRes>) ResponseEntity.notFound();
+            System.out.println(student);
+            if(student == null)
+            {
+                LoginRes newLoginRes = new LoginRes();
+                newLoginRes.setMessage("Student Not Found");
+                return newLoginRes;
+            }
 
             String token = jwtUtil.generateToken(user.getEmail());
-            return ResponseEntity.ok(new LoginRes("Login in Success",token, user.getId(), user.getEmail(), null, student));
+            return new LoginRes("Login in Success",token, user.getId(), user.getEmail(), null, student);
         } else {
             throw new RuntimeException("Invalid Credentials");
         }

@@ -38,6 +38,9 @@ public class Activity {
 
     private Category category;
 
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private Goals goal;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ActivityMapper> measures;
 

@@ -25,6 +25,8 @@ public class SaveActivityDto {
 
     private Long coachId;
 
+    private Long goalId;
+
     private List<ActivityMapper> measures;
 
     private Category category;
